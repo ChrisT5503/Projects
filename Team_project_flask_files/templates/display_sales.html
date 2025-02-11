@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alcohol Sales Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 90%;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        h1, h2 {
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 5px 7px;
+            font-size: 12px;
+            margin: 1px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Alcohol Sales Tracker</h1>
+    <p>Welcome, {{ session['username'] }}</p>
+    <div class="button-container">
+        <a href="{{ url_for('homepage') }}"><button>Back</button></a>
+        <a href="{{ url_for('logout') }}"><button>Logout</button></a>
+    <h3>Filter Sales by Year</h3>
+    <form method="POST">
+        <label for="year">Select Year:</label>
+        <select name="year" id="year">
+            <option value="">All Years</option>
+            {% for year in range(2021, 2025) %}
+                <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>{{ year }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+    <h3>Alcohol Names, Volumes, and Brands (Aggregated and Sorted by Total Sales)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Alcohol Name</th>
+                <th>Brand</th>
+                <th>Volume (ml) </th>
+                <th>Price per Bottle ($)</th>
+                <th>Quantity Sold</th>
+                <th>Total Sales ($)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in alcohol_list %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.brand }}</td>
+                <td>{{ item.volume }}</td>
+                <td>${{ item.retail_price }}</td>
+                <td>{{ item.quantity_sold }}</td>
+                <td>${{ item.total_sales }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

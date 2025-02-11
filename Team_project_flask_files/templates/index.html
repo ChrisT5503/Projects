@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Store Sales Forecast</title>
+</head>
+<body>
+    <h1>Select a Store to Forecast Sales</h1>
+    <form action="/forecast" method="post">
+        <label for="store">Store:</label>
+        <select name="store" id="store">
+            {% for store in stores %}
+                <option value="{{ store }}">{{ store }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Forecast</button>
+    </form>
+    <a href="http://127.0.0.1:5000/">Back to Homepage</a>
+
+</body>
+</html>
